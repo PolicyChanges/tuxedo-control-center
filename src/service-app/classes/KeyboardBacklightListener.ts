@@ -119,8 +119,8 @@ export class KeyboardBacklightListener extends DaemonListener {
                             if (!(await this.sysDBusUPowerProps.Get('org.freedesktop.UPower', 'LidIsClosed')).value) {
                                 let keyboardBacklightStatesNew: KeyboardBacklightStateInterface = this.tccd.settings.keyboardBacklightStates;
                                 let colors = (await fs.promises.readFile(this.ledsRGBZones[i] + "/multi_intensity")).toString().split(' ').map(Number);
-                                keyboardBacklightStatesNew[i].red = colors[0];
-                                keyboardBacklightStatesNew[i].green = colors[1];
+                                keyboardBacklightStatesNew[i].red = colors[1];
+                                keyboardBacklightStatesNew[i].green = colors[0];
                                 keyboardBacklightStatesNew[i].blue = colors[2];
                                 this.setKeyboardBacklightStates(keyboardBacklightStatesNew, false, true, true);
                             }
@@ -308,8 +308,8 @@ export class KeyboardBacklightListener extends DaemonListener {
             for (let i: number = 0; i < this.ledsRGBZones.length ; ++i) {
                 if (await fileOKAsync(this.ledsRGBZones[i] + "/multi_intensity")) {
                     await fs.promises.appendFile(this.ledsRGBZones[i] + "/multi_intensity",
-                                                    keyboardBacklightStatesNew[i].red.toString() + " " + 
                                                     keyboardBacklightStatesNew[i].green.toString() + " " + 
+                                                    keyboardBacklightStatesNew[i].red.toString() + " " + 
                                                     keyboardBacklightStatesNew[i].blue.toString());
                 }
             }
